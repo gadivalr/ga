@@ -69,15 +69,7 @@ img{
     font-weight: 500;
     font-family: 'Roboto', sans-serif;
 }
-/* .main-menu-content ul li a:before{
-    position: absolute;
-    content: "";
-    bottom: -10px;
-    left: 0;
-    width: 100px;
-    height: 8px;
-    background: blue;
-} */
+
 .main-menu-close-btn{
     position: absolute;
     top:30px;
@@ -329,41 +321,11 @@ nav ul  a:hover {
 }
 
 
-.footer {
-  background-color: #333333;
-  color: #ffffff;
-  padding: 10px;
-  margin-top: 40px;
-  }
 
-	/* .card {
-    display: inline-block;
-    position: relative;
-    width: 200px;
-    height: 300px;
-    margin: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease-in-out;
-  }
-  .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-  }
-  .card:hover .btn {
-    opacity: 1;
-  }
-  .btn {
-    display: block;
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 20px;
-    background-color: #000000;
-    color: #ffffff;
+  footer {
+    background-color: #333333;
+    padding: 20px;
     text-align: center;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    cursor: pointer;
-  } */
+    color: #ffffff
+  }
+ 
