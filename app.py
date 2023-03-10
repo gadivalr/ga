@@ -5,6 +5,9 @@ from flaskext.mysql import MySQL
 from datetime import datetime
 from flask import send_from_directory
 import os
+import html
+import re
+import sqlite3
 
 app=Flask(__name__)
 app.secret_key="clave_secreta"
@@ -16,6 +19,7 @@ app.config['MYSQL_DATABASE_DB'] = 'sitio'
 mysql.init_app(app)
 
 
+    
 @app.route("/css/<css>")
 def css_link(css):
     return send_from_directory(os.path.join('templates/sitio/css'), css)
@@ -106,7 +110,6 @@ def admin_post_guardar():
     imagen = request.files['txtImagen']
     descripcion = request.form['txtDescripcion']
     contenido = request.form['txtContenido']
-    contenidoo=contenido
     tags = request.form['txtTag']
     tiempo=datetime.now()
     horaActual=tiempo.strftime("%Y%H%M%S")
@@ -114,21 +117,35 @@ def admin_post_guardar():
     if imagen.filename != '':
         nuevoNombreImagen=horaActual+"_"+imagen.filename
         imagen.save("templates/sitio/img/"+nuevoNombreImagen)
-
+        
+    def limpiar_texto(texto):
+    # Convertir las entidades HTML a sus caracteres correspondientes
+        texto = html.unescape(texto)
+    
+    # Eliminar las etiquetas HTML
+        texto = re.sub(r'<[^>]*>', '', texto)
+    
+        return texto
+    contenido_limpio = limpiar_texto(contenido)  
+        
+        
     sql= "INSERT INTO `post` (`id`, `nombre`, `fecha`, `descripcion`, `imagen`, `contenido`, `tag`) VALUES (NULL, %s, %s, %s,%s,%s,%s);"
     
 
-    datos=(titulo,fecha,descripcion,nuevoNombreImagen,contenidoo,tags)
+    datos=(titulo,fecha,descripcion,nuevoNombreImagen,contenido_limpio,tags)
     
     conexion=mysql.connect()
     cursor=conexion.cursor()
     cursor.execute(sql,datos)
     conexion.commit()
     
+    
     print(titulo)
     print(fecha)
     print(imagen)
     print(descripcion)
+    print(contenido)
+    print(contenido_limpio)
     return redirect('/admin/post')
 
 @app.route('/admin/post/delete', methods=['POST'])
