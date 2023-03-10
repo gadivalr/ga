@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="css/ionicons.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 </head>
 <body>
     <header class="header-area">
@@ -54,71 +56,27 @@
                 <i class="ion-close"></i>
             </a>
          <ul>
-            <li><a href="">Home</a> </li>
-            <li><a href="Mangas.html">Mangas fav</a> </li>
-            <li><a href="">Reflexiones</a> </li>
-            <li><a href="/login">Login</a> </li>
+            <li><a href="/">Home</a> </li>
+            <li><a href="/mangas">Mangas fav</a> </li>
+            <!-- <li><a href="/post">Post</a> </li> -->
+            
+            <li><a href="/admin/login">Login</a> </li>
          </ul>   
         </div>
         <div class="container">
-            <div class="card">
-              <img src="img/image.jpg">
-              <a href="blog.html">  <h2> Musashi Miyamoto </h2></a>
-              
-              <p>Miyamoto Musashi fue un famoso samurái y ronin japonés del siglo XVII, conocido...</p>
-              <div class="tags">
-                <span>MANGA</span>
-                <!-- <span>Etiqueta 2</span> -->
-              </div>
-            </div>
-            <div class="card">
-              <img src="img/thorfinn.jpg">
-              <a href="blog3.html">  <h2>El mensaje de Vinland Saga</h2></a>
-              <p>Vinland Saga es una obra que a través de su trama y personajes, aborda...</p>
-              <div class="tags">
-                <span>MANGA</span>
-                <!-- <span>Etiqueta 2</span> -->
-              </div>
-            </div>
-            <div class="card">
-              <img src="img/guts.jpg">
-              <a href="blog2.html">  <h2  >La evolución de Guts</h2></a>
-              <p>La evolución de Guts en Berserk es uno de los aspectos más destacados de su obra...</p>
-              <div class="tags">
-                <span>MANGA</span>
-                <!-- <span>Etiqueta 2</span> -->
-              </div>
-            </div>
-            <div class="card">
-              <img src="img/udec-foro-y-campanil.jpg">
-              <a href="blogblanco.html">  <h2  >Primer año de U</h2></a>
-              <p>Contenido de la tarjeta 1</p>
-              <div class="tags">
-                <span>UNIVERSIDAD</span>
-                
-              </div>
-            </div>
-            <div class="card">
-              <img src="img/gg.jpg">
-              <a href="blogblanco2.html">  <h2  >Título</h2></a>
-              <p>Contenido</p>
-              <div class="tags">
-                <span>RANDOM</span>
-                <!-- <span>Etiqueta 4</span> -->
-              </div>
-            </div>
-            <div class="card">
-              <img src="img/arb.jpg">
-              <a href="blogblanco2.html">  <h2  >Título </h2></a>
-              <p>Contenido</p>
-              <div class="tags">
-                <span>RANDOM</span>
-                <!-- <span>Etiqueta 6</span> -->
-              </div>
+          {% for post in post %}
+          <div class="card">
+            <img src="/img/{{ post[4]}}">
+            <a href="/blog/{{ post[1]}}">  <h2>{{ post[1] }}</h2></a>
+            
+            <p> {{ post[3] }}</p>
+            <div class="tags">
+              <span>MANGA</span>
+              <!-- <span>Etiqueta 2</span> -->
             </div>
           </div>
-          
-        
+          {% endfor %}
+        </div>
         </main>
          <div id="lastray" class="element"></div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.1/gsap.min.js"></script>

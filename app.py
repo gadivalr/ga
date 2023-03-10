@@ -15,6 +15,7 @@ app.config['MYSQL_DATABASE_PASSWORD'] = ''
 app.config['MYSQL_DATABASE_DB'] = 'sitio'
 mysql.init_app(app)
 
+
 @app.route("/css/<css>")
 def css_link(css):
     return send_from_directory(os.path.join('templates/sitio/css'), css)
@@ -27,7 +28,13 @@ def fonts_link(fonts):
 
 @app.route('/')
 def inicio():
-    return render_template('sitio/index.html')
+    conexion=mysql.connect()
+    cursor=conexion.cursor()
+    cursor.execute("SELECT * FROM `post`")
+    post=cursor.fetchall()
+    conexion.commit()
+    print(post)
+    return render_template('sitio/index.html',post=post)
 
 @app.route('/img/<imagen>')
 def imagen(imagen):
@@ -46,6 +53,10 @@ def post():
 @app.route('/about')
 def about():
     return render_template('sitio/about.html')
+
+@app.route('/mangas')
+def manga():
+    return render_template('sitio/Mangas.html')
 
 @app.route('/admin/')
 def admin_index():
@@ -94,6 +105,9 @@ def admin_post_guardar():
     fecha = request.form['txtFecha']
     imagen = request.files['txtImagen']
     descripcion = request.form['txtDescripcion']
+    contenido = request.form['txtContenido']
+    contenidoo=contenido
+    tags = request.form['txtTag']
     tiempo=datetime.now()
     horaActual=tiempo.strftime("%Y%H%M%S")
     
@@ -101,10 +115,10 @@ def admin_post_guardar():
         nuevoNombreImagen=horaActual+"_"+imagen.filename
         imagen.save("templates/sitio/img/"+nuevoNombreImagen)
 
-    sql= "INSERT INTO `post` (`id`, `nombre`, `fecha`, `descripcion`, `imagen`) VALUES (NULL, %s, %s, %s,%s);"
+    sql= "INSERT INTO `post` (`id`, `nombre`, `fecha`, `descripcion`, `imagen`, `contenido`, `tag`) VALUES (NULL, %s, %s, %s,%s,%s,%s);"
     
 
-    datos=(titulo,fecha,descripcion,nuevoNombreImagen)
+    datos=(titulo,fecha,descripcion,nuevoNombreImagen,contenidoo,tags)
     
     conexion=mysql.connect()
     cursor=conexion.cursor()
@@ -141,6 +155,15 @@ def admin_post_delete():
     
     
     return redirect('/admin/post')
+@app.route("/blog/<nombre>")
+def blog(nombre):
+    conexion=mysql.connect()
+    cursor=conexion.cursor()
+    cursor.execute("SELECT * FROM `post` WHERE nombre=%s",(nombre))
+    post=cursor.fetchall()
+    conexion.commit()
+    print(post)
+    return render_template('sitio/blog2.html',post=post)
 
 
 
